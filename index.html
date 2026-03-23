@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>RaubvogelPost – Anmeldung</title>
+  <style>
+    :root { color-scheme: light only; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #ffffff;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    /* ── ASCII ART ── */
+    .ascii-art {
+      display: inline-block;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.2;
+      color: #000000;
+      white-space: pre;
+      margin-bottom: 16px;
+    }
+
+    /* ── TITEL ── */
+    .title {
+      font-family: 'Courier New',  monospace;
+      font-size: 28px;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 5px;
+      text-decoration: underline;
+    }
+
+    /* ── UNTERTITEL ── */
+    .subtitle {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: #666666;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    /* ── FORMULAR ── */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="email"],
+    input[type="text"] {
+      width: 280px;
+      max-width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #dddddd;
+      background: #f9f9f9;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus {
+      border-color: #000000;
+      background: #ffffff;
+    }
+
+    button[type="submit"] {
+      margin-top: 4px;
+      padding: 8px 20px;
+      background: #000000;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    button[type="submit"]:hover {
+      background: #333333;
+    }
+
+    /* ── ERFOLGSMELDUNG ── */
+    .success-msg {
+      display: none;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #000000;
+      margin-top: 12px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER: ASCII + Titel -->
+    <pre class="ascii-art">                       /░;
+                    /:░░
+                   /░x;                      .
+                 / ░░░>                     ;7
+                / ░w░#/)                  ░░
+               /'v░~sY/B               /:;/
+              | "░░!░░, C)           /░░/             • 7
+              |•@^░*░°:/->U\_    _  /░b░           •░░ °
+               \_  O*░*░ #░░░•°•e•v░░░░##W    .░░░ °
+                \_ 0Oo—   °•°•o..░░'░W░░░░░el░
+                 \_/@          ,-,  :░░░;••°
+                 (|       /==R 7/ —7░
+                (:       (  ░░*  ?,, B
+               (|  ,   :;"\_  ░░v  &C—/)
+                \_  *_`/    \_  ░░░ *  ░░#
+                  V'        | ;:░░ •░░░(C :          . ░•
+                            (░   :░░░g░░ C;!/  oO /•░░░
+                            (\_░    a •░░░░░•_?_u/░░░;•
+                              \_░  ","" +░░——░░—//
+                                ^°•~______.—</pre>
+
+    <h1 class="title">RaubvogelPost</h1>
+
+    <!-- FORMULAR -->
+    <p class="subtitle">Anmeldung</p>
+
+    <!--
+      WICHTIG: Ersetze "DEINE_FORMSPREE_ID" mit deiner echten ID von formspree.io
+      Beispiel: https://formspree.io/f/xbjvkpqr
+    -->
+    <form action="https://formspree.io/f/xbdznjre" method="POST">
+      <input type="email" name="email" placeholder="deine@email.com" required>
+     
+      <!-- Spam-Schutz: dieses Feld bleibt leer -->
+      <input type="text" name="_gotcha" style="display:none">
+      <button type="submit">anmelden</button>
+    </form>
+
+    <p class="success-msg" id="successMsg">✓ you will get mail!</p>
+
+  </div>
+
+  <script>
+    // Zeigt eine Erfolgsmeldung nach dem Absenden (optional, Formspree leitet sonst weiter)
+    const form = document.querySelector('form');
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        alert('Etwas hat nicht geklappt – bitte versuche es nochmal.');
+      }
+    });
+  </script>
+</body>
+</html>
