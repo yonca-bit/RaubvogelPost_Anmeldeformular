@@ -211,15 +211,14 @@
   </div>
 
   <script>
-    // ── Popup schließen (unverändert) ──
+    // ── Popup schließen ──
     const overlay = document.getElementById('overlay');
     document.getElementById('closeBtn').addEventListener('click', () => overlay.style.display = 'none');
     overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.style.display = 'none'; });
-
+  
     // ── Formular absenden ──
-    // ↓ HIER deine Google Apps Script URL eintragen ↓
-    "const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL7iwv8ttnawgDQDp09NvB2aIAjCHIYsSOoKONZEu_GuN_dUx1ooH6owz4bLjEjV8W/exec";";
-
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL7iwv8ttnawgDQDp09NvB2aIAjCHIYsSOoKONZEu_GuN_dUx1ooH6owz4bLjEjV8W/exec";
+  
     const form = document.getElementById('newsletter-form');
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -228,9 +227,8 @@
         await fetch(SCRIPT_URL, {
           method: 'POST',
           body: data,
-          mode: 'no-cors' // Google Scripts brauchen das
+          mode: 'no-cors'
         });
-        // no-cors gibt keine Antwort zurück, also gehen wir von Erfolg aus
         form.style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
       } catch(err) {
